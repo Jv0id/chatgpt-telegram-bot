@@ -177,7 +177,7 @@ func main() {
 				for currentAnswer := range throttledAnswerChan {
 					if messageID == 0 {
 						message := tgbotapi.NewMessage(userID, currentAnswer)
-						message.ParseMode = ModeMarkdownV2
+						message.ParseMode = ModeHTML
 						msg, err := bot.Send(message)
 						if err != nil {
 							log.Print(err)
@@ -185,7 +185,7 @@ func main() {
 						messageID = msg.MessageID
 					} else {
 						editedMsg := tgbotapi.NewEditMessageText(userID, messageID, currentAnswer)
-						editedMsg.ParseMode = ModeMarkdownV2
+						editedMsg.ParseMode = ModeHTML
 						_, err := bot.Send(editedMsg)
 						if err != nil {
 							log.Print(err)
