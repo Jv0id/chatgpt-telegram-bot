@@ -32,12 +32,6 @@ type User struct {
 	LatestMessage  tgbotapi.Message
 }
 
-const (
-	ModeMarkdown   = "Markdown"
-	ModeMarkdownV2 = "MarkdownV2"
-	ModeHTML       = "HTML"
-)
-
 func main() {
 	if err := env.Parse(&cfg); err != nil {
 		fmt.Printf("%+v\n", err)
@@ -177,7 +171,6 @@ func main() {
 				for currentAnswer := range throttledAnswerChan {
 					if messageID == 0 {
 						message := tgbotapi.NewMessage(userID, currentAnswer)
-						message.ParseMode = ModeHTML
 						msg, err := bot.Send(message)
 						if err != nil {
 							log.Print(err)
@@ -185,7 +178,6 @@ func main() {
 						messageID = msg.MessageID
 					} else {
 						editedMsg := tgbotapi.NewEditMessageText(userID, messageID, currentAnswer)
-						editedMsg.ParseMode = ModeHTML
 						_, err := bot.Send(editedMsg)
 						if err != nil {
 							log.Print(err)
